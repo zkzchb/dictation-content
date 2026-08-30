@@ -1,0 +1,92 @@
+name: One-time publish content-v1.0.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-content-v1.0.0.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-time-content-v1.0.0
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CONTENT_COMMIT: 1e79970a34216edde9e31d2156ccd6bc000f8573
+      CONTENT_TREE: 9ba9cc6ae1beb40792c46e4e0d279082e9127243
+      PROGRAM_COMMIT: 7fbb12546b507b516fa0be9363047b9de2e7761d
+      RELEASE_TAG: content-v1.0.0
+      WORKFLOW_PATH: .github/workflows/release-content-v1.0.0.yml
+    steps:
+      - name: Check out immutable content candidate
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.CONTENT_COMMIT }}
+          path: content
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check out compatible validator
+        uses: actions/checkout@v7
+        with:
+          repository: zkzchb/dictation
+          ref: ${{ env.PROGRAM_COMMIT }}
+          path: dictation
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Verify immutable candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git -C content rev-parse HEAD)" = "$CONTENT_COMMIT"
+          test "$(git -C content rev-parse 'HEAD^{tree}')" = "$CONTENT_TREE"
+          python dictation/shared/content_pack.py content/packs/zh-cn/primary-3a
+          python dictation/shared/tools/audio_bundle.py verify-dataset             --content-root content/packs/zh-cn/primary-3a
+          (cd content/packs/zh-cn/primary-3a && sha256sum --check tts.sha256)
+          test "$(find content/packs/zh-cn/primary-3a/tts -type f -name '*.mp3' | wc -l)" -eq 894
+
+      - name: Delete this one-time workflow before publishing
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          encoded_path=".github/workflows/release-content-v1.0.0.yml"
+          workflow_sha="$(gh api "repos/$GITHUB_REPOSITORY/contents/$encoded_path?ref=$GITHUB_REF_NAME" --jq .sha)"
+          gh api --method DELETE "repos/$GITHUB_REPOSITORY/contents/$encoded_path"             -f message="chore: remove one-time content release workflow"             -f sha="$workflow_sha"             -f branch="$GITHUB_REF_NAME"
+          if gh api "repos/$GITHUB_REPOSITORY/contents/$encoded_path?ref=$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Self-deletion did not complete; refusing to publish" >&2
+            exit 1
+          fi
+
+      - name: Create immutable tag and release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Refusing to overwrite existing tag $RELEASE_TAG" >&2
+            exit 1
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs"             -f ref="refs/tags/$RELEASE_TAG"             -f sha="$CONTENT_COMMIT"
+          notes="$RUNNER_TEMP/content-release-notes.md"
+          {
+            printf '# Dictation Content v1.0.0\n\n'
+            printf 'First public release of the independently maintained `primary-3a` content pack.\n\n'
+            printf -- '- 43 lessons and 814 knowledge points\n'
+            printf -- '- 869 word recordings and 25 system recordings (894 MP3 files)\n'
+            printf -- '- Dataset digest: `b8ea48ecfb9302ba4fc05b6dfca32786360db111d76df90a865e937db6cfc43a`\n'
+            printf -- '- License: CC BY-NC 4.0\n'
+            printf -- '- Compatible program candidate: `v2.1.0-rc.1`\n'
+          } > "$notes"
+          gh release create "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --verify-tag             --title "Dictation Content v1.0.0"             --notes-file "$notes"

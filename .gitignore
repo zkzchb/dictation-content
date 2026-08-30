@@ -1,0 +1,18 @@
+# Runtime state must never enter the content repository.
+__pycache__/
+*.pyc
+*.db
+*.db-*
+.recorded.json
+.recorded_sys.json
+.checked.json
+.rerecord.json
+*.part
+*.bak
+*.bak_pinyin
+_pinyin_review.txt
+*.backup-*
+.runtime/
+
+# Generated manifests are reviewable only when intentionally staged.
+tts-manifest.generated.json

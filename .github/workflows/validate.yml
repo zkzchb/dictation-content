@@ -1,0 +1,45 @@
+name: Validate content packs
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: ${{ !contains(github.event.head_commit.message || '', '[bootstrap-audio]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out content
+        uses: actions/checkout@v7
+
+      # Use the compatible program branch until the content split lands on main.
+      - name: Check out pack validator
+        uses: actions/checkout@v7
+        with:
+          repository: zkzchb/dictation
+          ref: codex/v2.1-oss
+          path: dictation
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Validate every published pack
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          packs=(packs/*/*)
+          test "${#packs[@]}" -gt 0
+          for pack in "${packs[@]}"; do
+            test -f "$pack/dataset.json"
+            python dictation/shared/content_pack.py "$pack"
+            DICTATION_CONTENT_ROOT="$GITHUB_WORKSPACE/$pack" \
+              python dictation/shared/tools/audio_bundle.py verify-dataset \
+              --content-root "$GITHUB_WORKSPACE/$pack"
+          done

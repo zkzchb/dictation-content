@@ -1,0 +1,65 @@
+{
+  "audio": {
+    "author": "zkzchb",
+    "license": "CC-BY-NC-4.0",
+    "provenance": "内容仓库维护者本人录制。"
+  },
+  "counts": {
+    "categories": {
+      "多音字": 38,
+      "易错字": 108,
+      "生字": 250,
+      "词语": 418
+    },
+    "knowledge_points": 814,
+    "lessons": 43,
+    "studio_words": 869,
+    "tts_system": 25,
+    "tts_words": 869
+  },
+  "display_name": "人教版小学语文三年级上册",
+  "grade": 3,
+  "id": "chinese-3a",
+  "language": "zh-CN",
+  "license": "CC-BY-NC-4.0",
+  "paths": {
+    "knowledge_points": "knowledge_points.json",
+    "lessons": "lessons.json",
+    "studio_manifest": "studio_manifest.json",
+    "tts": "tts",
+    "tts_checksums": "tts.sha256"
+  },
+  "runtime": {
+    "cold_start_lesson": 3000,
+    "daily_target": 30,
+    "initial_lesson": 3111,
+    "polyphonic_per_lesson": 2,
+    "review_lessons": [
+      3110,
+      3120,
+      3130,
+      3140,
+      3150,
+      3160,
+      3170,
+      3180
+    ],
+    "review_target": 50
+  },
+  "schema_version": 1,
+  "semester": "first",
+  "sha256": {
+    "dataset": "b8ea48ecfb9302ba4fc05b6dfca32786360db111d76df90a865e937db6cfc43a",
+    "knowledge_points": "36f379970543deb49c927b719a7b038d804604303cb91f32b9a564f0552d9c33",
+    "lessons": "7aa92ab5145ebe9b1abbebb2e14590f73401069e17aa5e2a75d0a9b06b00e8d7",
+    "studio_manifest": "1c318165b4ba522e1fa7028249171bdc2cbae6eda66d2b4affffdcf8bb724afb",
+    "tts_checksums": "8d3bd338f29ad01dfeddc4687f06b1f7f0f72d54529b93f8a7b534fa734c1460"
+  },
+  "source": {
+    "author": "zkzchb",
+    "statement": "结构化教材数据与编排由内容仓库维护者独立制作。",
+    "type": "original"
+  },
+  "subject": "chinese",
+  "version": "1.0.0"
+}

@@ -23,9 +23,12 @@ Dictation 的独立内容仓库，保存可由程序仓库加载的 content-pack
 
 ## 权利与许可
 
-本仓库的结构化内容、编排和 MP3 录音由 `zkzchb` 独立制作或录制，并以
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 发布。使用、改编或再发布时请
-保留作者署名和本仓库链接；具体权利说明见 [NOTICE.md](NOTICE.md)。
+本仓库的结构化内容、编排和 MP3 录音由 `zkzchb` 独立制作或录制。整个仓库（包括
+`tools/` 中的辅助材料）统一按
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) 发布：可以在非商业目的下
+分享和改编，但必须保留作者署名、本仓库链接、许可证链接，并标明是否修改。商业使用不在
+本许可证授权范围内，需要另行取得权利人的书面许可。完整范围和署名方式见
+[LICENSE](LICENSE) 与 [NOTICE.md](NOTICE.md)。
 
 这不是 Dictation 程序代码仓库。程序代码、部署脚本和测试使用 AGPL-3.0，见
 程序仓库的 [README](https://github.com/zkzchb/dictation)。

@@ -15,12 +15,13 @@ jobs:
       - name: Check out content
         uses: actions/checkout@v7
 
-      # Use the compatible program branch until the content split lands on main.
+      # Pin the validator used for content-v1.0.0. Update this only after a
+      # compatible program release passes the same content-pack contract tests.
       - name: Check out pack validator
         uses: actions/checkout@v7
         with:
           repository: zkzchb/dictation
-          ref: codex/v2.1-oss
+          ref: 0df7ecd36585f68bb010fd67dd951f8cac309229
           path: dictation
 
       - name: Set up Python
@@ -42,4 +43,3 @@ jobs:
               python dictation/shared/tools/audio_bundle.py verify-dataset \
               --content-root "$GITHUB_WORKSPACE/$pack"
           done
-

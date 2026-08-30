@@ -17,7 +17,8 @@ Dictation 的独立内容仓库，保存可由程序仓库加载的 content-pack
 - `tts.sha256`：逐文件音频校验清单；
 - `dataset.json`：内容身份、版本、运行参数、计数、权利和总体 digest。
 
-内容包遵循程序仓库的 [content-pack v1 规范](https://github.com/zkzchb/dictation/blob/codex/v2.1-oss/docs/CONTENT-PACK-SPEC.md)。
+内容包遵循程序仓库候选提交中冻结的
+[content-pack v1 规范](https://github.com/zkzchb/dictation/blob/0df7ecd36585f68bb010fd67dd951f8cac309229/docs/CONTENT-PACK-SPEC.md)。
 每个 pack 的 `id` 保持稳定；知识点 ID 一旦发布不得重新分配给另一个知识点。兼容更新可以
 追加课程和知识点，删除或重新编号应建立新的 pack id。
 
@@ -45,4 +46,5 @@ DICTATION_CONTENT_ROOT="$PWD/packs/zh-cn/primary-3a" \
 ```
 
 发布新内容版本前，应更新 `version`、结构化文件哈希、`tts.sha256` 和 `dataset` digest，
-完整校验通过后再创建内容标签，例如 `content-v1.0.0`。
+完整校验通过后再创建内容标签。首个公开组合使用 `content-v1.0.0`，对应程序
+`v2.1.0-rc.1`；部署时应同时记录两个标签、提交和 dataset digest。

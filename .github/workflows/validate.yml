@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   validate:
-    if: ${{ !contains(github.event.head_commit.message || '', '[bootstrap-audio]') }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out content
@@ -43,3 +42,4 @@ jobs:
               python dictation/shared/tools/audio_bundle.py verify-dataset \
               --content-root "$GITHUB_WORKSPACE/$pack"
           done
+

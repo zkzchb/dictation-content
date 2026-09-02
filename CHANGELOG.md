@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 — 2026-09-02
+
+- Removed the deprecated `poly_intro` TTS asset, which is not used by the current player or recording studio.
+
 ## 1.0.0 — 2026-08-30
 
 - Initial public release of the `chinese-3a` content pack.

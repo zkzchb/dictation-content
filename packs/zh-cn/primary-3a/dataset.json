@@ -14,7 +14,7 @@
     "knowledge_points": 814,
     "lessons": 43,
     "studio_words": 869,
-    "tts_system": 25,
+    "tts_system": 24,
     "tts_words": 869
   },
   "display_name": "人教版小学语文三年级上册",
@@ -53,7 +53,7 @@
     "knowledge_points": "36f379970543deb49c927b719a7b038d804604303cb91f32b9a564f0552d9c33",
     "lessons": "7aa92ab5145ebe9b1abbebb2e14590f73401069e17aa5e2a75d0a9b06b00e8d7",
     "studio_manifest": "1c318165b4ba522e1fa7028249171bdc2cbae6eda66d2b4affffdcf8bb724afb",
-    "tts_checksums": "8d3bd338f29ad01dfeddc4687f06b1f7f0f72d54529b93f8a7b534fa734c1460"
+    "tts_checksums": "bdd1380b371b752c8bd275a126149f4d9b77dfbb6afb070e06e5a2264b2a6342"
   },
   "source": {
     "author": "zkzchb",
@@ -61,5 +61,5 @@
     "type": "original"
   },
   "subject": "chinese",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

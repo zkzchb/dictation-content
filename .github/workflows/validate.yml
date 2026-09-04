@@ -15,13 +15,13 @@ jobs:
       - name: Check out content
         uses: actions/checkout@v7
 
-      # Pin the validator used for content-v1.0.0. Update this only after a
+      # Pin the validator used for content-v1.0.1. Update this only after a
       # compatible program release passes the same content-pack contract tests.
       - name: Check out pack validator
         uses: actions/checkout@v7
         with:
           repository: zkzchb/dictation
-          ref: 0df7ecd36585f68bb010fd67dd951f8cac309229
+          ref: 8f0ad980049d0a0af3cf752b17f5313bc22684f9
           path: dictation
 
       - name: Set up Python
